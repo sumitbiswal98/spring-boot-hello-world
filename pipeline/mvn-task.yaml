@@ -20,4 +20,4 @@ spec:
           echo "mvn something";
           cd /workspace/source/$(params.uid);
           mvn $(params.goal) -Dmaven.repo.local=/workspace/source/m2;
-      image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven
+      image: quay.io/sumitbiswal/jenkins-agent-maven
