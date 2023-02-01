@@ -25,4 +25,4 @@ spec:
           oc expose svc/hello-world -n edwin-deploy || true ;
           cd / ;
           rm -Rf /workspace/source/$(params.uid) ;
-      image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven
+      image: quay.io/sumitbiswal/jenkins-agent-maven
