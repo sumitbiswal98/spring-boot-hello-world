@@ -20,4 +20,4 @@ spec:
           echo "git clone";
           mkdir /workspace/source/$(params.uid) && cd /workspace/source/$(params.uid);
           git clone $(params.app-git) /workspace/source/$(params.uid);
-      image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven
+      image: quay.io/sumitbiswal/jenkins-agent-maven
