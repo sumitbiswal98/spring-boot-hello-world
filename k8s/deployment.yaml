@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: my-container
-        image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins-agent-maven
+        image: quay.io/sumitbiswal/jenkins-agent-maven:latest
         ports:
         - containerPort: 80
