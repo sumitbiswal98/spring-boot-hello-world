@@ -1,5 +1,5 @@
 # Use an openjdk base image
-FROM jboss-eap-7/eap-xp4-openjdk11-openshift-rhel8
+FROM docker.io/openjdk-11
 
 # Set the working directory
 WORKDIR /workspace/source/
