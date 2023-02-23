@@ -17,6 +17,8 @@ FROM openjdk/openjdk-11-rhel7
 
 EXPOSE 8010
 
-ADD my-app.jar my-app.jar
+ARG JAR_FILE=target/*.jar
+
+COPY ${JAR_FILE} my-app.jar
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/my-app.jar"]
