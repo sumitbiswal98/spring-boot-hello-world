@@ -2,6 +2,7 @@
 # FROM openjdk/openjdk-11-rhel7
 
 # # Set the working directory
+
 # WORKDIR /workspace/source/
 
 # # Copy the JAR file to the working directory
