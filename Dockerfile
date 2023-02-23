@@ -1,5 +1,5 @@
 # Use an openjdk base image
-FROM docker.io/openjdk-11
+FROM openjdk-11
 
 # Set the working directory
 WORKDIR /workspace/source/
