@@ -1,14 +1,12 @@
 # Use an openjdk base image
-FROM openjdk:14-jdk-alpine
+FROM jboss-eap-7/eap-xp4-openjdk11-openshift-rhel8
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /workspace/source/
 
 # Copy the JAR file to the working directory
-COPY path/to/your.jar /app/your.jar
+COPY workspace/source/target/*.jar /workspace/source/
 
-# Set the environment variable
-ENV JAVA_OPTS=""
 
 # Run the JAR file
-ENTRYPOINT ["java", "-jar", "your.jar"]
+ENTRYPOINT ["java", "-jar", "*.jar"]
