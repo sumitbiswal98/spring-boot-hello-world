@@ -1,5 +1,5 @@
 # Use an openjdk base image
-FROM registry.access.redhat.com/openjdk-11
+FROM openjdk/openjdk-11-rhel7
 
 # Set the working directory
 WORKDIR /workspace/source/
