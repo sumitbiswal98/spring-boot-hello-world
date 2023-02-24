@@ -13,12 +13,24 @@
 # ENTRYPOINT ["java", "-jar", "*.jar"]
 
 
+# FROM openjdk/openjdk-11-rhel7
+
+
+# EXPOSE 8010
+
+# ARG JAR_FILE=target/*.jar
+
+# COPY ${JAR_FILE} my-app.jar
+
+# ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/my-app.jar"]
+
+
 FROM openjdk/openjdk-11-rhel7
 
-EXPOSE 8010
+EXPOSE 8080
 
-ARG JAR_FILE=target/*.jar
+COPY target/*.jar /app/my-app.jar
 
-COPY ${JAR_FILE} my-app.jar
+WORKDIR /app
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=dev", "-jar", "/my-app.jar"]
+ENTRYPOINT ["java", "-jar", "my-app.jar"]
