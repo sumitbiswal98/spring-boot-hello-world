@@ -43,6 +43,49 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.0.2155</version>
+            </plugin>
+
+
+
         </plugins>
     </build>
+
+
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+               <sonar.host.url>https://sonar-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/</sonar.host.url>
+	       <sonar.login>sqa_cda44e15e7b1008e3de3c7516308d137898813c2</sonar.login>
+               <sonar.projectName>springboot</sonar.projectName>
+               <sonar.projectVersion>main</sonar.projectVersion>
+               <sonar.test.exclusions>**/test/**/*.*</sonar.test.exclusions>
+               <sonar.exclusions>**/ai/**/*.*,**/jdbc/**/*.*,**/mpt/**/*.*,**/jcr/**/*.*,**/JDBC*</sonar.exclusions>
+            </properties>
+        </profile>
+    </profiles>
+
+
+
+
+    <distributionManagement>
+        <snapshotRepository>
+          <id>sumit-snap1</id>
+          <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+        </snapshotRepository>
+        <repository>
+          <id>sumit-snap1</id>
+          <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+        </repository>
+      
+    </distributionManagement>
+    
+
 </project>
