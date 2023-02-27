@@ -1,68 +1,101 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: hello-world-java-build-and-deploy
+  name: tekton-ci
 spec:
   params:
-    - name: uid
-      description: the uid
-  workspaces:
-    - name: task-pvc
+    - default: quay.io/sumitbiswal/maven
+      description: The fully qualified image name e.g example.com/tekton-tutorial/greeter
+      name: IMAGE_NAME
+      type: string
+    - default: 'https://github.com/sumitbiswal98/spring-boot-hello-world.git'
+      description: The GitHub Repo of the Java Application
+      name: GITHUB_REPO_URL
+      type: string
+    - default: master
+      description: The GitHub revision to use
+      name: GITHUB_REPO_REVISION
+      type: string
   tasks:
-  - name: git-clone
-    taskRef:
-      name: git-clone
-    params:
-    - name: app-git
-      value: https://github.com/sumitbiswal98/spring-boot-hello-world.git
-    - name: uid
-      value: $(params.uid)
-    workspaces:
-    - name: task-pvc
-      workspace: task-pvc
-  - name: build
-    taskRef:
-      name: mvn
-    runAfter: ["git-clone"]
-    params:
-    - name: goal
-      value: "package"
-    - name: uid
-      value: $(params.uid)
-    workspaces:
-    - name: task-pvc
-      workspace: task-pvc
-  - name: test
-    taskRef:
-      name: mvn
-    runAfter: ["build"]
-    params:
-    - name: goal
-      value: "test"
-    - name: uid
-      value: $(params.uid)
-    workspaces:
-    - name: task-pvc
-      workspace: task-pvc
-  - name: integration-test
-    taskRef:
-      name: mvn
-    runAfter: ["build"]
-    params:
-    - name: goal
-      value: "test"
-    - name: uid
-      value: $(params.uid)
-    workspaces:
-    - name: task-pvc
-      workspace: task-pvc      
-  - name: deploy
-    taskRef:
-      name: deploy-and-clean
-    runAfter: ["integration-test","test"]
-    params:
-    - name: uid
-      value: $(params.uid)
-    workspaces:
-    - name: task-pvc
-      workspace: task-pvc
+    - name: git-clone
+      params:
+        - name: url
+          value: $(params.GITHUB_REPO_URL)
+        - name: revision
+          value: $(params.GITHUB_REPO_REVISION)
+        - name: deleteExisting
+          value: 'true'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: source
+    - name: code-analysis
+      params:
+        - name: GOALS
+          value:
+            - 'sonar:sonar'
+      runAfter:
+        - git-clone
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      workspaces:
+        - name: source
+          workspace: source
+        - name: maven-settings
+          workspace: pvc
+    - name: maven-build
+      params:
+        - name: GOALS
+          value:
+            - clean
+            - install
+            - package
+            - deploy
+      runAfter:
+        - code-analysis
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      workspaces:
+        - name: source
+          workspace: source
+        - name: maven-settings
+          workspace: source
+    - name: build-image
+      params:
+        - name: TLSVERIFY
+          value: 'false'
+        - name: IMAGE
+          value: '$(params.IMAGE_NAME):$(tasks.git-clone.results.commit)'
+      runAfter:
+        - maven-build
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: source
+    - name: git-update-deployment
+      params:
+        - name: GIT_REPOSITORY_URL_UPDATE
+          value: 'https://github.com/sumitbiswal98/maven.git'
+        - name: CURRENT_IMAGE
+          value: quay.io/sumitbiswal/maven
+        - name: NEW_IMAGE
+          value: 'quay.io/sumitbiswal/maven:$(tasks.git-clone.results.commit)'
+        - name: KUSTOMIZATION_PATH
+          value: k8s
+      runAfter:
+        - build-image
+      taskRef:
+        kind: Task
+        name: git-update-deployment
+      workspaces:
+        - name: pvc
+          workspace: pvc
+  workspaces:
+    - name: source
+    - name: pvc
