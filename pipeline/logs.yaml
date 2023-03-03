@@ -1,0 +1,62 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  creationTimestamp: '2023-03-03T12:17:49Z'
+  generation: 2
+  managedFields:
+    - apiVersion: tekton.dev/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:params': {}
+          'f:steps': {}
+          'f:volumes': {}
+      manager: Mozilla
+      operation: Update
+      time: '2023-03-03T12:17:49Z'
+  name: store-pipelinerun-logs1
+  namespace: sumit
+  resourceVersion: '9291444'
+  selfLink: /apis/tekton.dev/v1beta1/namespaces/sumit/tasks/store-pipelinerun-logs1
+  uid: e4d03c3f-198f-4602-b527-0887fcd6f2eb
+spec:
+  params:
+    - description: The path to store the logs file.
+      name: log-file-path
+      type: string
+    - description: The email address to send the logs file to.
+      name: email-to
+      type: string
+  steps:
+    - args:
+        - '-c'
+        - >-
+          apk add --no-cache curl && curl -LO
+          https://github.com/tektoncd/cli/releases/download/v0.18.0/tkn_0.18.0_Linux_x86_64.tar.gz
+          && tar xvzf tkn_0.18.0_Linux_x86_64.tar.gz && mv tkn /usr/local/bin/
+          && rm -f tkn_0.18.0_Linux_x86_64.tar.gz
+        - tkn pipelinerun logs -f -L > $(params.log-file-path)
+        - apk add --no-cache mailx
+      command:
+        - sh
+      image: alpine
+      name: store-logs
+      resources: {}
+      volumeMounts:
+        - mountPath: /mnt/logs
+          name: source
+    - args:
+        - '-c'
+        - >-
+          echo "PipelineRun logs attached." | mailx -s "PipelineRun Logs" -a
+          $(params.log-file-path) $(params.email-to)
+      command:
+        - sh
+      image: alpine
+      name: email-logs
+      resources: {}
+  volumes:
+    - name: source
+      persistentVolumeClaim:
+        claimName: source
