@@ -66,8 +66,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-               <sonar.host.url>https://sonar-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/</sonar.host.url>
-	       <sonar.login>sqa_cda44e15e7b1008e3de3c7516308d137898813c2</sonar.login>
+               <sonar.host.url>https://sonar-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com</sonar.host.url>
+	       <sonar.login>sqa_067659fb421dce2138ab65f3a8889923fd9b45bd</sonar.login>
                <sonar.projectName>springboot</sonar.projectName>
                <sonar.projectVersion>main</sonar.projectVersion>
                <sonar.test.exclusions>**/test/**/*.*</sonar.test.exclusions>
@@ -82,11 +82,11 @@
     <distributionManagement>
         <snapshotRepository>
           <id>sumit-snap1</id>
-          <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+          <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
         </snapshotRepository>
         <repository>
           <id>sumit-snap1</id>
-          <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+          <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
         </repository>
       
     </distributionManagement>
