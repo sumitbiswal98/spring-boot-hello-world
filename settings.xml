@@ -18,7 +18,7 @@
     <mirror>
       <id>sumit-proxy1</id>
       <mirrorOf>*</mirrorOf>
-      <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-proxy1/</url>
+      <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-proxy1//</url>
     </mirror>
   </mirrors>
   <profiles>
@@ -38,7 +38,7 @@
        <repository>
          <id>sumit-snap1</id>
          <name>your custom repo</name>
-         <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+         <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
        </repository>      
      </repositories>
           
@@ -49,7 +49,7 @@
        <repository>
          <id>sumit-snap1</id>
          <name>your custom repo</name>
-         <url>http://nexus-java-sonar-nexus.apps.cluster-mz8m9.mz8m9.sandbox2638.opentlc.com/repository/sumit-snap1/</url>
+         <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
        </repository>
      </repositories>
    </profile>
