@@ -59,7 +59,7 @@
     </build>
 
 
-    <profiles>
+<!--     <profiles>
         <profile>
             <id>sonar</id>
             <activation>
@@ -74,12 +74,12 @@
                <sonar.exclusions>**/*.java,**/ai/**/*.*,**/jdbc/**/*.*,**/mpt/**/*.*,**/jcr/**/*.*,**/JDBC*</sonar.exclusions>
             </properties>
         </profile>
-    </profiles>
+    </profiles> -->
 
 
 
 
-    <distributionManagement>
+<!--     <distributionManagement>
         <snapshotRepository>
           <id>sumit-snap1</id>
           <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
@@ -89,7 +89,7 @@
           <url>http://nexus-sumit.apps.cluster-5q5fv.5q5fv.sandbox3194.opentlc.com/repository/sumit-snap1/</url>
         </repository>
       
-    </distributionManagement>
+    </distributionManagement> -->
     
 
 </project>
